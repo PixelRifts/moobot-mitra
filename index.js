@@ -9,7 +9,6 @@ for (const file of commandFiles) {
 	Client.commands.set(command.name, command);
 }
 
-const Token = 'NzUyNTQwNjU5Nzg0NzQ1MDUw.X1ZIGg.aNhrXKpGL-yvy2qT-SaS7r8210A';
 const PREFIX = '/';
 
 Client.on('ready', () => {
@@ -30,4 +29,4 @@ Client.on('message', message => {
     }
 });
 
-Client.login(Token);
+Client.login(process.env.BOT_TOKEN);
