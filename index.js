@@ -2,6 +2,7 @@ const FileSystem = require('fs');
 const Discord = require('discord.js');
 const Client = new Discord.Client();
 Client.commands = new Discord.Collection();
+const DEV = false;
 
 const commandFiles = FileSystem.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -29,4 +30,10 @@ Client.on('message', message => {
     }
 });
 
-Client.login(process.env.BOT_TOKEN);
+if (DEV) {
+    FileSystem.readFile("token.txt", "utf8", (err, data) => {
+        Client.login(data);
+    });
+} else {
+    Client.login(process.env.BOT_TOKEN);
+}
