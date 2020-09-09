@@ -10,6 +10,7 @@ module.exports = {
         try {
             P.getPokemonByName(args[0]).then(function(response) {
                 message.channel.send('http://play.pokemonshowdown.com/sprites/ani/' + response.name + '.gif');
+                console.log(response.name);
             });
         } catch (error) {
             console.log(error);
