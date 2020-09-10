@@ -46,9 +46,7 @@ function manipulate_title(string) {
 async function getPokemon(message, pokemonName) {
     try {
         return await Pokedex.getPokemonByName(pokemonName);
-    } catch (error) {
-        return;
-    }
+    } catch (error) {}
 }
 
 // ////////// //
