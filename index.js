@@ -2,7 +2,7 @@ const FileSystem = require('fs');
 const Discord = require('discord.js');
 const Client = new Discord.Client();
 Client.commands = new Discord.Collection();
-const DEV = false;
+const DEV = true;
 
 const commandFiles = FileSystem.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -29,9 +29,8 @@ Client.on('message', message => {
     const commandName = args.shift().toLowerCase();
     const command = Client.commands.get(commandName);
 
-    if (command.args && !args.length) {
-        return message.channel.send(`You didn't provide any arguments, ${message.author}! \n
-        							Expected: ${command.expected}`);
+    if (command.args.compulsary != 0 && !args.length) {
+        return message.channel.send(`You didn't provide any arguments, ${message.author}! \n Expected: ${command.expected}`);
     }
 
 	// ///////////////// //

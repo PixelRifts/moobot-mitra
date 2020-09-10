@@ -47,7 +47,6 @@ async function getPokemon(message, pokemonName) {
     try {
         return await Pokedex.getPokemonByName(pokemonName);
     } catch (error) {
-        message.reply(`There was an error fetching Data for the Pokemon ${pokemonName}`);
         return;
     }
 }
@@ -74,23 +73,34 @@ function listAbilities(message, pokemonName) {
     });
 }
 
+function showPokemonEmbed(message, pokemonName) {
+	getPokemon(message, pokemonName).then(pkmn => {
+		message.reply(pokembed
+			.setTitle(manipulate_title(pokemonName))
+			.setImage(`http://play.pokemonshowdown.com/sprites/ani/${pokemonName}.gif`)
+		);
+	}).catch(err => {
+		message.reply(`Pokemon ${pokemonName} not found! Make sure you have the correct spelling :D`)
+	});
+}
+
 // /////// //
-// Command // 
+// Command //
 // /////// //
 
 module.exports = {
     name: 'pokemon',
     description: 'Get info of pokemon!',
-	args: true,
+	args: {
+		compulsary: 1,
+		optional: 1
+	},
 	cooldown: 5,
     expected: '/pokemon <Pokemon Name> [Action]',
 	execute(message, args) {
 		const pokemonName = args[0];
 		if (args.length == 1) {
-			message.reply(pokembed
-				.setTitle(manipulate_title(pokemonName))
-				.setImage(`http://play.pokemonshowdown.com/sprites/ani/${pokemonName}.gif`)
-			);
+			showPokemonEmbed(message, pokemonName);
 		}
         const operation = args[1];
         switch (operation) {
