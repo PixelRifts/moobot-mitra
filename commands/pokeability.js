@@ -18,7 +18,15 @@ module.exports = {
     execute(message, args) {
         const abilityName = args[0];
         Pokedex.getAbilityByName(abilityName).then(response => {
-            message.reply(`${response.effect_entries[1].effect}`);
+            let effect_entries = response.effect_entries;
+            var retval = ''; 
+            for (let e of effect_entries) {
+                if (e.language.name === 'en') {
+                    console.log(e.effect);
+                    retval = e.effect;
+                }
+            }
+            message.reply(`${retval}`);
         }).catch(error => {});
     }
 }
