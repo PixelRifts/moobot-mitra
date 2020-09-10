@@ -2,7 +2,7 @@ const FileSystem = require('fs');
 const Discord = require('discord.js');
 const Client = new Discord.Client();
 Client.commands = new Discord.Collection();
-const DEV = false;
+const DEV = true;
 
 const commandFiles = FileSystem.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -12,6 +12,8 @@ for (const file of commandFiles) {
 
 const PREFIX = '/';
 
+const cooldowns = new Discord.Collection();
+
 Client.on('ready', () => {
     console.log('MooBot is online! Say Hi everyone!!');
 });
@@ -19,14 +21,46 @@ Client.on('ready', () => {
 Client.on('message', message => {
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
+	// //////////////////////// //
+	// Command Argument Parsing //
+	// //////////////////////// //
+
 	const args = message.content.slice(PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
     const command = Client.commands.get(commandName);
-    console.log(args);
 
     if (command.args && !args.length) {
-    	return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+        return message.channel.send(`You didn't provide any arguments, ${message.author}! \n
+        							Expected: ${command.expected}`);
     }
+
+	// ///////////////// //
+	// Command Cooldowns //
+	// ///////////////// //
+
+	if (!cooldowns.has(command.name)) {
+		cooldowns.set(command.name, new Discord.Collection());
+	}
+	
+	const now = Date.now();
+	const timestamps = cooldowns.get(command.name);
+	const cooldownAmount = (command.cooldown || 3) * 1000;
+	
+	if (timestamps.has(message.author.id)) {
+		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+		if (now < expirationTime) {
+			const timeLeft = (expirationTime - now) / 1000;
+			return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+		}
+	} else {
+		timestamps.set(message.author.id, now);
+		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+	}
+
+	// ///////////////// //
+	// Command Executing //
+	// ///////////////// //
 
     try {
         command.execute(message, args);
