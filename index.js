@@ -1,8 +1,9 @@
 const FileSystem = require('fs');
 const Discord = require('discord.js');
+
 const Client = new Discord.Client();
 Client.commands = new Discord.Collection();
-const DEV = false;
+const DEV = true;
 
 const commandFiles = FileSystem.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -27,9 +28,10 @@ Client.on('message', message => {
 
 	const args = message.content.slice(PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
-    const command = Client.commands.get(commandName);
+	const command = Client.commands.get(commandName);
+	if (commandName === 'mootactoe')
 
-    if (command.args.compulsary != 0 && !args.length) {
+    if (command.args && !args.length) {
         return message.channel.send(`You didn't provide any arguments, ${message.author}! \n Expected: ${command.expected}`);
     }
 
@@ -68,6 +70,18 @@ Client.on('message', message => {
         message.reply('There was an error trying to execute that command!');
     }
 });
+
+module.exports.parseMention = function(mention) {
+    if (!mention) return;
+	if (mention.startsWith('<@') && mention.endsWith('>')) {
+		mention = mention.slice(2, -1);
+		if (mention.startsWith('!')) {
+			mention = mention.slice(1);
+		}
+		return Client.users.cache.get(mention);
+	}
+}
+
 
 if (DEV) {
     FileSystem.readFile("token.txt", "utf8", (err, data) => {

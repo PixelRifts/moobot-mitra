@@ -32,7 +32,7 @@ function manipulate_title(string) {
 		retval = 'Gigantamax ';
 	} else if (capitalized.endsWith('-alola')) {
 		capitalized = capitalized.substr(0, capitalized.length - 6);
-		retval = 'Alolan ';
+		retval = 'Alolan ';	
 	} else if (capitalized.endsWith('-galar')) {
 		capitalized = capitalized.substr(0, capitalized.length - 6);
 		retval = 'Galarian ';
@@ -89,10 +89,7 @@ function showPokemonEmbed(message, pokemonName) {
 module.exports = {
     name: 'pokemon',
     description: 'Get info of pokemon!',
-	args: {
-		compulsary: 1,
-		optional: 1
-	},
+	args: true,
 	cooldown: 5,
     expected: '/pokemon <Pokemon Name> [Action]',
 	execute(message, args) {

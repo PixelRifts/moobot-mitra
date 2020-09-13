@@ -10,9 +10,7 @@ async function getAbility(message, pokemonName) {
 module.exports = {
     name: 'pokeability',
     description: 'Get info of Abilities',
-    args: {
-		compulsary: 1,
-    },
+    args: true,
     cooldown: 5,
     expected: '/pokeability <Ability Name>',
     execute(message, args) {
