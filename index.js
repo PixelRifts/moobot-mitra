@@ -38,6 +38,7 @@ Client.on('message', message => {
 	// ///////////////// //
 	// Command Cooldowns //
 	// ///////////////// //
+	if (!command) return;
 
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());

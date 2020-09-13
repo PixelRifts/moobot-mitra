@@ -68,15 +68,15 @@ module.exports = class {
         ]
         for (let current of checks) {
             if (this.board[current[0]] == this.board[current[1]] && this.board[current[1]] == this.board[current[2]]
-                && this.board[current[0]] != 'U') {
+                && this.board[current[0]] !== 'U') {
                 return this.board[current[0]];
             }
         }
         for (var i = 0; i < 9; i++) {
-            if (this.board[i] != 'U') {
-                return 'U';
+            if (this.board[i] === 'U') {
+                return null;
             }
         }
-        return null;
+        return 'U';
     }
 }
