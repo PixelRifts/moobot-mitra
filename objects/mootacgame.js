@@ -27,6 +27,10 @@ module.exports = class {
             this.current = this.current == this.p1 ? this.p2 : this.p1;
             let p = this.checkWins();
             if (p) {
+                if (p == 'U') {
+                    message.reply(`The match was a tie`);
+                    return true;
+                }
                 message.reply(`${p} is the Winner`);
                 return true;
             }
@@ -66,6 +70,11 @@ module.exports = class {
             if (this.board[current[0]] == this.board[current[1]] && this.board[current[1]] == this.board[current[2]]
                 && this.board[current[0]] != 'U') {
                 return this.board[current[0]];
+            }
+        }
+        for (var i = 0; i < 9; i++) {
+            if (this.board[i] != 'U') {
+                return 'U';
             }
         }
         return null;
