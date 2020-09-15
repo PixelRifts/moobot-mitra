@@ -28,17 +28,17 @@ Client.on('message', message => {
 
 	const args = message.content.slice(PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
-	const command = Client.commands.get(commandName);
-	if (commandName === 'mootactoe')
+	const command = Client.commands.get(commandName)
+		|| Client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	if (!command) return;
 
-    if (command.args && !args.length) {
+	if (command.args && !args.length) {
         return message.channel.send(`You didn't provide any arguments, ${message.author}! \n Expected: ${command.expected}`);
     }
 
 	// ///////////////// //
 	// Command Cooldowns //
 	// ///////////////// //
-	if (!command) return;
 
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());

@@ -15,6 +15,7 @@ function line(ctx, x1, y1, x2, y2) {
 module.exports = {
     name: 'mootactoe',
     description: 'Play Moo-Tac-Toe TM',
+    aliases: ['mtt'],
     args: true,
     cooldown: 10,
     expected: '/mootactoe <Tag other Player>',
