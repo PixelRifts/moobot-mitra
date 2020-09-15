@@ -3,10 +3,6 @@ const Discord = require('discord.js');
 Pokemon = require('pokeapi-js-wrapper');
 const Pokedex = new Pokemon.Pokedex();
 
-const pokembed = new Discord.MessageEmbed()
-		.setColor('#ee3355');
-
-
 // //////////////// //
 // Helper Functions //
 // //////////////// //
@@ -77,7 +73,8 @@ function showPokemonEmbed(message, pokemonName) {
 		var typestr = '';
 		for (let t of pkmn.types)
 			typestr = typestr.concat(capitalize(t.type.name)).concat(' ');
-		message.reply(pokembed
+		message.reply(new Discord.MessageEmbed()
+			.setColor('#ee3355')
 			.setTitle(manipulate_title(pokemonName))
 			.setImage(`http://play.pokemonshowdown.com/sprites/ani/${pokemonName}.gif`)
 			.addFields(
