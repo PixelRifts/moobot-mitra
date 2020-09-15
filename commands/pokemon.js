@@ -73,9 +73,16 @@ function listAbilities(message, pokemonName) {
 
 function showPokemonEmbed(message, pokemonName) {
 	getPokemon(message, pokemonName).then(pkmn => {
+		console.log(pkmn.types);
+		var typestr = '';
+		for (let t of pkmn.types)
+			typestr = typestr.concat(capitalize(t.type.name)).concat(' ');
 		message.reply(pokembed
 			.setTitle(manipulate_title(pokemonName))
 			.setImage(`http://play.pokemonshowdown.com/sprites/ani/${pokemonName}.gif`)
+			.addFields(
+				{ name: 'Type', value: typestr },
+			)
 		);
 	}).catch(err => {
 		message.reply(`Pokemon ${pokemonName} not found! Make sure you have the correct spelling :D`)
