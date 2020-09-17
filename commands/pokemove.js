@@ -27,14 +27,14 @@ module.exports = {
                     .setColor('#cc22cc')
                     .setTitle(capitalize(moveName))
                     .addFields(
-                        { name: 'Type', value: 'Special', inline: true },
+                        { name: 'Type', value: capitalize(response.damage_class.name), inline: true },
                         { name: 'Accuracy', value: response.accuracy, inline: true },
 
                         { name: 'Effect', value: retval },
 
                         { name: 'Power', value: response.power, inline: true },
                         { name: 'PP', value: response.pp, inline: true },
-                        { name: 'Type', value: response.type.name, inline: true },
+                        { name: 'Type', value: capitalize(response.type.name), inline: true },
                     );
             message.reply(embed);
         }).catch(error => {});
