@@ -1,12 +1,6 @@
 Pokemon = require('pokeapi-js-wrapper');
 const Pokedex = new Pokemon.Pokedex();
 
-async function getAbility(message, pokemonName) {
-    try {
-        return await Pokedex.getAbilityByName(pokemonName);
-    } catch (error) {}
-}
-
 module.exports = {
     name: 'pokeability',
     description: 'Get info of Abilities',
@@ -20,7 +14,6 @@ module.exports = {
             var retval = ''; 
             for (let e of effect_entries) {
                 if (e.language.name === 'en') {
-                    console.log(e.effect);
                     retval = e.effect;
                 }
             }
