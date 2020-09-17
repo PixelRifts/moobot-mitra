@@ -1,5 +1,3 @@
-MooTacToe = require('./mootactoe.js');
-
 const playtable = new Map([
     ['tl', 0],
     ['t',  1],
@@ -20,7 +18,7 @@ module.exports = {
     expected: '/play <Your Move>',
     execute(message, args) {
         var finishedGame;
-        for (let game of MooTacToe.games) {
+        for (let game of global.RunningMTTGames) {
             if (game.p1 == message.author || game.p2 == message.author) {
                 if (playtable.get(args[0]) == null){
                     message.reply("If you cant type a direction please leave.");
@@ -34,9 +32,9 @@ module.exports = {
                 message.reply('You are not in a game! Use /mootactoe <Tag-Opponent> to begin a game!');
             }
         }
-        const index = MooTacToe.games.indexOf(finishedGame);
+        const index = global.RunningMTTGames.indexOf(finishedGame);
         if (finishedGame == null || finishedGame == -1) return;
-        MooTacToe.games.splice(index, 1);
+        global.RunningMTTGames.splice(index, 1);
         console.log('Ended Game!');
     }
 }

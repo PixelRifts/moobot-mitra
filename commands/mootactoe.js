@@ -3,7 +3,7 @@ const Canvas = require('canvas');
 const Discord = require('discord.js');
 const Mootacgame = require('../objects/mootacgame.js');
 
-var RunningGames = [];
+global.RunningMTTGames = [];
 
 function line(ctx, x1, y1, x2, y2) {
     ctx.beginPath();
@@ -20,7 +20,7 @@ module.exports = {
     cooldown: 10,
     expected: '/mootactoe <Tag other Player>',
     execute(message, args) {
-        for (let game of RunningGames) {
+        for (let game of global.RunningMTTGames) {
             if (message.author == p1 || message.author == p2)
                 message.reply(`${message.author} is playing another game`);
                 
@@ -41,8 +41,6 @@ module.exports = {
         let attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'moo-tac-toe.png');
         message.reply(attachment);
 
-        RunningGames.push(new Mootacgame(message.author, Helpers.parseMention(args[0]), canvas));
-    },
-
-    games: RunningGames
+        global.RunningMTTGames.push(new Mootacgame(message.author, Helpers.parseMention(args[0]), canvas));
+    }
 }
