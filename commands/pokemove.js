@@ -11,7 +11,7 @@ function fixTitle(string) {
     let blocks = string.split('-');
     var retval = '';
     for (let block of blocks) {
-        retval = retval.concat(capitalize(block));
+        retval = retval.concat(capitalize(block)).concat(' ');
     }
     return retval;
 }
