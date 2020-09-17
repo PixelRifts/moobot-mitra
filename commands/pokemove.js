@@ -7,6 +7,15 @@ function capitalize (string) {
 	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
 }
 
+function fixTitle(string) {
+    let blocks = string.split('-');
+    var retval = '';
+    for (let block of blocks) {
+        retval = retval.concat(capitalize(block));
+    }
+    return retval;
+}
+
 module.exports = {
     name: 'pokemove',
     description: 'Get info on moves',
@@ -25,9 +34,9 @@ module.exports = {
             }
             let embed = new Discord.MessageEmbed()
                     .setColor('#cc22cc')
-                    .setTitle(capitalize(moveName))
+                    .setTitle(fixTitle(moveName))
                     .addFields(
-                        { name: 'Type', value: capitalize(response.damage_class.name), inline: true },
+                        { name: 'Damage-Class', value: capitalize(response.damage_class.name), inline: true },
                         { name: 'Accuracy', value: response.accuracy, inline: true },
 
                         { name: 'Effect', value: retval },
