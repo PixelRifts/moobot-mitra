@@ -32,6 +32,7 @@ module.exports = {
                     retval = e.effect;
                 }
             }
+            if (retval == '') retval = 'None';
             let embed = new Discord.MessageEmbed()
                     .setColor('#cc22cc')
                     .setTitle(fixTitle(moveName))
@@ -46,6 +47,6 @@ module.exports = {
                         { name: 'Type', value: capitalize(response.type.name), inline: true },
                     );
             message.reply(embed);
-        }).catch(error => {});
+        }).catch(error => {console.log(error);});
     }
 }
