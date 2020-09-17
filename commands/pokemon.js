@@ -13,30 +13,18 @@ function capitalize (string) {
 
 function manipulate_title(string) {
 	var capitalized = capitalize(string);
-	var retval = '';
-	if (capitalized.endsWith('-mega')) {
-		capitalized = capitalized.substr(0, capitalized.length - 5);
-		retval = 'Mega ';
-	} else if (capitalized.endsWith('-megax')) {
-		capitalized = capitalized.substr(0, capitalized.length - 6).concat(' X');
-		retval = 'Mega ';
-	} else if (capitalized.endsWith('-megay')) {
-		capitalized = capitalized.substr(0, capitalized.length - 6).concat(' Y');
-		retval = 'Mega ';
-	} else if (capitalized.endsWith('-gmax')) {
-		capitalized = capitalized.substr(0, capitalized.length - 5);
-		retval = 'Gigantamax ';
-	} else if (capitalized.endsWith('-alola')) {
-		capitalized = capitalized.substr(0, capitalized.length - 6);
-		retval = 'Alolan ';	
-	} else if (capitalized.endsWith('-galar')) {
-		capitalized = capitalized.substr(0, capitalized.length - 6);
-		retval = 'Galarian ';
-	} else if (capitalized.endsWith('-eternamax')) {
-		capitalized = capitalized.substr(0, capitalized.length - 10);
-		retval = 'Eternamax ';
-	}
-	return retval.concat(capitalized);
+	let blocks = capitalized.split('-');
+	capitalized = blocks[0];
+	if (capitalized == 'Tapu')
+		return capitalized.concat(' ').concat(capitalize(blocks[1]));
+	let prefix = blocks[1] ? capitalize(blocks[1]) : '';
+	return prefix.concat(' ').concat(capitalized);
+}
+
+function reformatForGif(string) {
+	if (string === 'deoxys-normal')	
+		return 'deoxys';
+	return string;
 }
 
 async function getPokemon(message, pokemonName) {
@@ -69,16 +57,24 @@ function listAbilities(message, pokemonName) {
 
 function showPokemonEmbed(message, pokemonName) {
 	getPokemon(message, pokemonName).then(pkmn => {
-		console.log(pkmn.types);
 		var typestr = '';
+		var reformattedName = reformatForGif(pokemonName);
+
 		for (let t of pkmn.types)
 			typestr = typestr.concat(capitalize(t.type.name)).concat(' ');
+
 		message.reply(new Discord.MessageEmbed()
 			.setColor('#ee3355')
 			.setTitle(manipulate_title(pokemonName))
-			.setImage(`http://play.pokemonshowdown.com/sprites/ani/${pokemonName}.gif`)
+			.setImage(`http://play.pokemonshowdown.com/sprites/ani/${reformattedName}.gif`)
 			.addFields(
 				{ name: 'Type', value: typestr },
+				{ name: 'HP', value: pkmn.stats[0].base_stat, inline: true },
+				{ name: 'Attack', value: pkmn.stats[1].base_stat, inline: true },
+				{ name: 'Defence', value: pkmn.stats[2].base_stat, inline: true },
+				{ name: 'Sp.Attack', value: pkmn.stats[3].base_stat, inline: true },
+				{ name: 'Sp.Defence', value: pkmn.stats[4].base_stat, inline: true },
+				{ name: 'Speed', value: pkmn.stats[5].base_stat, inline: true },
 			)
 		);
 	}).catch(err => {

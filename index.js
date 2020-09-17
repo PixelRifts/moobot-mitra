@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 
 const Client = new Discord.Client();
 Client.commands = new Discord.Collection();
-const DEV = false;
+const DEV = true;
 
 const commandFiles = FileSystem.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -82,7 +82,6 @@ module.exports.parseMention = function(mention) {
 		return Client.users.cache.get(mention);
 	}
 }
-
 
 if (DEV) {
     FileSystem.readFile("token.txt", "utf8", (err, data) => {
