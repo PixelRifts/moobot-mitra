@@ -7,17 +7,13 @@ const Pokedex = new Pokemon.Pokedex();
 // Helper Functions //
 // //////////////// //
 
-function capitalize (string) {
-	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
-}
-
 function manipulate_title(string) {
-	var capitalized = capitalize(string);
+	var capitalized = global.capitalize(string);
 	let blocks = capitalized.split('-');
 	capitalized = blocks[0];
 	if (capitalized == 'Tapu')
-		return capitalized.concat(' ').concat(capitalize(blocks[1]));
-	let prefix = blocks[1] ? capitalize(blocks[1]) : '';
+		return capitalized.concat(' ').concat(global.capitalize(blocks[1]));
+	let prefix = blocks[1] ? global.capitalize(blocks[1]) : '';
 	return prefix.concat(' ').concat(capitalized);
 }
 
@@ -61,7 +57,7 @@ function showPokemonEmbed(message, pokemonName) {
 		var reformattedName = reformatForGif(pokemonName);
 
 		for (let t of pkmn.types)
-			typestr = typestr.concat(capitalize(t.type.name)).concat(' ');
+			typestr = typestr.concat(global.capitalize(t.type.name)).concat(' ');
 
 		message.reply(new Discord.MessageEmbed()
 			.setColor('#ee3355')
@@ -91,7 +87,7 @@ module.exports = {
     description: 'Get info of pokemon!',
 	args: true,
 	cooldown: 5,
-    expected: '/pokemon <Pokemon Name> [Action]',
+    expected: '/pokemon <Pokemon Name> [Operation]',
 	execute(message, args) {
 		const pokemonName = args[0];
 		if (args.length == 1) {

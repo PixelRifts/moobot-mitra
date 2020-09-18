@@ -3,11 +3,11 @@ const Discord = require('discord.js');
 Pokemon = require('pokeapi-js-wrapper');
 const Pokedex = new Pokemon.Pokedex();
 
-function capitalize (string) {
+global.capitalize = function(string) {
 	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
 }
 
-function fixTitle(string) {
+global.fixTitle = function(string) {
     let blocks = string.split('-');
     var retval = '';
     for (let block of blocks) {
@@ -35,9 +35,9 @@ module.exports = {
             if (retval == '') retval = 'None';
             let embed = new Discord.MessageEmbed()
                     .setColor('#cc22cc')
-                    .setTitle(fixTitle(moveName))
+                    .setTitle(global.fixTitle(moveName))
                     .addFields(
-                        { name: 'Damage-Class', value: capitalize(response.damage_class.name), inline: true },
+                        { name: 'Damage Class', value: capitalize(response.damage_class.name), inline: true },
                         { name: 'Accuracy', value: response.accuracy, inline: true },
 
                         { name: 'Effect', value: retval },
