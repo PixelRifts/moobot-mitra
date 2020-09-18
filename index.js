@@ -28,7 +28,6 @@ for (const file of commandFiles) {
 }
 
 const PREFIX = '/';
-
 const cooldowns = new Discord.Collection();
 
 Client.on('ready', () => {
