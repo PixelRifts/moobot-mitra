@@ -3,7 +3,23 @@ const Discord = require('discord.js');
 
 const Client = new Discord.Client();
 Client.commands = new Discord.Collection();
-const DEV = false;
+const DEV = true;
+
+// //////////////// //
+// GLOBAL FUNCTIONS //
+// //////////////// //
+global.capitalize = function(string) {
+	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
+}
+
+global.fixTitle = function(string) {
+    let blocks = string.split('-');
+    var retval = '';
+    for (let block of blocks) {
+        retval = retval.concat(capitalize(block)).concat(' ');
+    }
+    return retval;
+}
 
 const commandFiles = FileSystem.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {

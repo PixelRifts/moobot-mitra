@@ -3,19 +3,6 @@ const Discord = require('discord.js');
 Pokemon = require('pokeapi-js-wrapper');
 const Pokedex = new Pokemon.Pokedex();
 
-global.capitalize = function(string) {
-	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
-}
-
-global.fixTitle = function(string) {
-    let blocks = string.split('-');
-    var retval = '';
-    for (let block of blocks) {
-        retval = retval.concat(capitalize(block)).concat(' ');
-    }
-    return retval;
-}
-
 module.exports = {
     name: 'pokemove',
     description: 'Get info on moves',
