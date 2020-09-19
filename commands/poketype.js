@@ -5,10 +5,10 @@ const Pokedex = new Pokemon.Pokedex();
 
 module.exports = {
     name: 'poketype',
-    description: '',
+    description: 'Get info on types',
     args: true,
     cooldown: 2,
-    expected: '/poketype <Type>',
+    expected: '/poketype <Type Name>',
     execute(message, args) {
         const typeName = args[0];
         Pokedex.getTypeByName(typeName).then(response => {
