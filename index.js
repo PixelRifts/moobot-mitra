@@ -3,11 +3,12 @@ const Discord = require('discord.js');
 
 const Client = new Discord.Client();
 Client.commands = new Discord.Collection();
-const DEV = false;
 
 // //////////////// //
 // GLOBAL FUNCTIONS //
 // //////////////// //
+global.DEV = false;
+
 global.capitalize = function(string) {
 	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
 }
@@ -98,7 +99,7 @@ module.exports.parseMention = function(mention) {
 	}
 }
 
-if (DEV) {
+if (global.DEV) {
     FileSystem.readFile("token.txt", "utf8", (err, data) => {
         Client.login(data);
     });
