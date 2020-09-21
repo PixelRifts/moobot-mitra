@@ -34,7 +34,7 @@ async function getPokemon(message, pokemonName) {
 // ////////// //
 
 function showPokemon(message, pokemonName) {
-    message.channel.send(`http://play.pokemonshowdown.com/sprites/ani/${pokemonName}.gif`);
+    message.channel.send(`https://projectpokemon.org/images/normal-sprite/${pokemonName}.gif`);
 }
 
 function listAbilities(message, pokemonName) {
