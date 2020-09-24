@@ -62,7 +62,7 @@ function showPokemonEmbed(message, pokemonName) {
 		message.reply(new Discord.MessageEmbed()
 			.setColor('#ee3355')
 			.setTitle(manipulate_title(pokemonName))
-			.setImage(`http://play.pokemonshowdown.com/sprites/ani/${reformattedName}.gif`)
+			.setImage(`https://projectpokemon.org/images/normal-sprite/${reformattedName}.gif`)
 			.addFields(
 				{ name: 'Type', value: typestr },
 				{ name: 'HP', value: pkmn.stats[0].base_stat, inline: true },
