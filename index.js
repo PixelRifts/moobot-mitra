@@ -7,7 +7,7 @@ Client.commands = new Discord.Collection();
 // //////////////// //
 // GLOBAL FUNCTIONS //
 // //////////////// //
-global.DEV = true;
+global.DEV = false;
 
 global.capitalize = function(string) {
 	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
@@ -27,8 +27,8 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	Client.commands.set(command.name, command);
 }
+global.PREFIX = '/';
 
-const PREFIX = '/';
 const cooldowns = new Discord.Collection();
 
 Client.on('ready', () => {
@@ -36,13 +36,13 @@ Client.on('ready', () => {
 });
 
 Client.on('message', message => {
-	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+	if (!message.content.startsWith(global.PREFIX) || message.author.bot) return;
 
 	// //////////////////////// //
 	// Command Argument Parsing //
 	// //////////////////////// //
 
-	const args = message.content.slice(PREFIX.length).trim().split(/ +/);
+	const args = message.content.slice(global.PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 	const command = Client.commands.get(commandName)
 		|| Client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
