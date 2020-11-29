@@ -1,32 +1,32 @@
-const playtable = new Map([
-    ['tl', 0],
-    ['t',  1],
-    ['tr', 2],
-    ['l',  3],
-    ['m',  4],
-    ['r',  5],
-    ['bl', 6],
-    ['b',  7],
-    ['br', 8],
-]);
-
 module.exports = {
     name: 'play',
     description: '',
     args: true,
     cooldown: 2,
-    expected: '/play <Your Move>',
+    expected: '/play [SuperSection] <Your Move>',
     execute(message, args) {
         var finishedGame;
         for (let game of global.RunningMTTGames) {
             if (game.p1 == message.author || game.p2 == message.author) {
-                if (playtable.get(args[0]) == null){
-                    message.reply("If you cant type a direction please leave.");
-                    return;
-                }
-                if (game.play(message, message.author, playtable.get(args[0]))) {
-                    finishedGame = game;
-                    break;
+                if (args.length == 1) {
+                    if (!(args[0] > 0 && args[0] < 10)) {
+                        message.reply("If you cant type a coordinate u suk.");
+                        return;
+                    }
+                    if (game.play(message, message.author, args[0] - 1)) {
+                        finishedGame = game;
+                        break;
+                    }
+                } else {
+                    let notnumbercheck = ((args[0] < 0 || args[0] > 10) || (args[1] < 0 || args[1] > 10));
+                    if (notnumbercheck) {
+                        message.reply('Type supersection and your move separated by a space');
+                        return;
+                    }
+                    if (game.splay(message, message.author, args[0] - 1, args[1] - 1)) {
+                        finishedGame = game;
+                        break;
+                    }
                 }
             } else {
                 message.reply('You are not in a game! Use /mootactoe <Tag-Opponent> to begin a game!');
