@@ -59,7 +59,10 @@ module.exports = class {
 
             let t = this.updateSuperboard();
             let w = this.checkWinsWithinSupersection(s);
-            if (w == null) this.currentSupersection = v;
+            if (w == null) {
+                if (this.checkWinsWithinSupersection(v)) this.currentSupersection = -1;
+                else this.currentSupersection = v;
+            }
             else this.currentSupersection = -1;
             
             let p = this.checkWins();
@@ -97,7 +100,10 @@ module.exports = class {
             let t = this.updateSuperboard();
             
             let w = this.checkWinsWithinSupersection(this.currentSupersection);
-            if (w == null) this.currentSupersection = v;
+            if (w == null) {
+                if (this.checkWinsWithinSupersection(v)) this.currentSupersection = -1;
+                else this.currentSupersection = v;
+            }
             else this.currentSupersection = -1;
 
             let p = this.checkWins();
