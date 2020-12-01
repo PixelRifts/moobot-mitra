@@ -7,7 +7,7 @@ Client.commands = new Discord.Collection();
 // //////////////// //
 // GLOBAL FUNCTIONS //
 // //////////////// //
-global.DEV = true;
+global.DEV = false;
 
 global.capitalize = function(string) {
 	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
