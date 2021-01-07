@@ -40,12 +40,10 @@ Client.on('ready', () => {
 
 Client.on('message', message => {
 	if (recentMessages[message.author.id] == null) {
-		console.log(message.author.id);
 		recentMessages[message.author.id] = [];
 		recentMessages[message.author.id].push(message.content);
 	} else {
 		recentMessages[message.author.id].push(message.content);
-		console.log(recentMessages[message.author.id]);
 		if (recentMessages[message.author.id].length > global.SPAM_COUNT) {
 			recentMessages[message.author.id].splice(0, 1);
 		}
@@ -55,8 +53,7 @@ Client.on('message', message => {
 				c++;
 			}
 		}
-		console.log(c);
-		if (c >= global.SPAM_COUNT-1) {
+		if (c >= global.SPAM_COUNT) {
 			recentMessages[message.author.id].pop();
 			message.author.send("Stop spamming bitch. :eyes:");
 			message.delete();
