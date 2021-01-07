@@ -5,7 +5,7 @@ module.exports = {
     cooldown: 2,
     expected: '/play [SuperSection] <Your Move>',
     execute(message, args) {
-        var finishedGame;
+        let finishedGame;
         for (let game of global.RunningMTTGames) {
             if (game.p1 == message.author || game.p2 == message.author) {
                 if (args.length == 1) {

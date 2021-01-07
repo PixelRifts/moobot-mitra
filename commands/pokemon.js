@@ -8,7 +8,7 @@ const Pokedex = new Pokemon.Pokedex();
 // //////////////// //
 
 function manipulate_title(string) {
-	var capitalized = global.capitalize(string);
+	let capitalized = global.capitalize(string);
 	let blocks = capitalized.split('-');
 	capitalized = blocks[0];
 	if (capitalized == 'Tapu')
@@ -43,7 +43,7 @@ function listAbilities(message, pokemonName) {
         message.reply(`Here are the abilities of the Pokemon ${pokemonName}`);
         for (let a of abilities) {
             let h = a.is_hidden;
-            var hidden_text;
+            let hidden_text;
             if (h) hidden_text = ' [Hidden Ability]'
             else hidden_text = '';
             message.channel.send(a.ability.name + hidden_text);
@@ -53,8 +53,8 @@ function listAbilities(message, pokemonName) {
 
 function showPokemonEmbed(message, pokemonName) {
 	getPokemon(message, pokemonName).then(pkmn => {
-		var typestr = '';
-		var reformattedName = reformatForGif(pokemonName);
+		let typestr = '';
+		let reformattedName = reformatForGif(pokemonName);
 
 		for (let t of pkmn.types)
 			typestr = typestr.concat(global.capitalize(t.type.name)).concat(' ');

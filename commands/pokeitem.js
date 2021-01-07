@@ -13,7 +13,7 @@ module.exports = {
         const itemName = args[0];
         Pokedex.getItemByName(itemName).then(response => {
             let effect_entries = response.effect_entries;
-            var retval = ''; 
+            let retval = ''; 
             for (let e of effect_entries) {
                 if (e.language.name === 'en') {
                     retval = e.effect;

@@ -15,7 +15,7 @@ module.exports = {
                 let itemName = berryResponse.item.name;
                 Pokedex.getItemByName(itemName).then(berryItemResponse => {
                         let effect_entries = berryItemResponse.effect_entries;
-                        var retval = ''; 
+                        let retval = ''; 
                         for (let e of effect_entries) {
                             if (e.language.name === 'en') {
                                 retval = e.effect;
@@ -23,7 +23,7 @@ module.exports = {
                         }
 
                         let flavors = berryResponse.flavors;
-                        var flavorString = '';
+                        let flavorString = '';
                         for (let f of flavors) {
                             flavorString = flavorString.concat(f.flavor.name).concat(' ');
                         }

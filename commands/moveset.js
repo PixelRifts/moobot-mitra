@@ -26,9 +26,9 @@ module.exports = {
                             .concat('\n');
                 }
             }
-            var blocks = [ str ];
+            let blocks = [ str ];
             while (blocks[blocks.length - 1].length > 1999) {
-                var current = blocks.pop();
+                let current = blocks.pop();
                 blocks.push(current.substring(0, 1999));
                 blocks.push(current.substring(1999, str.length - 1));
             }

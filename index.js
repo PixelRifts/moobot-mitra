@@ -15,7 +15,7 @@ global.capitalize = function(string) {
 
 global.fixTitle = function(string) {
     let blocks = string.split('-');
-    var retval = '';
+    let retval = '';
     for (let block of blocks) {
         retval = retval.concat(capitalize(block)).concat(' ');
     }
@@ -28,14 +28,40 @@ for (const file of commandFiles) {
 	Client.commands.set(command.name, command);
 }
 global.PREFIX = '/';
+global.SPAM_COUNT = 4;
 
 const cooldowns = new Discord.Collection();
+
+const recentMessages = {}
 
 Client.on('ready', () => {
     console.log('MooBot is online! Say Hi everyone!!');
 });
 
 Client.on('message', message => {
+	if (recentMessages[message.author.id] == null) {
+		console.log(message.author.id);
+		recentMessages[message.author.id] = [];
+		recentMessages[message.author.id].push(message.content);
+	} else {
+		recentMessages[message.author.id].push(message.content);
+		console.log(recentMessages[message.author.id]);
+		if (recentMessages[message.author.id].length > global.SPAM_COUNT) {
+			recentMessages[message.author.id].splice(0, 1);
+		}
+		let c = 0;
+		for (let i = 0; i < recentMessages[message.author.id].length; i++) {
+			if (recentMessages[message.author.id][i] == recentMessages[message.author.id][0]) {
+				c++;
+			}
+		}
+		console.log(c);
+		if (c >= global.SPAM_COUNT-1) {
+			recentMessages[message.author.id].pop();
+			message.author.send("Stop spamming bitch. :eyes:");
+			message.delete();
+		}
+	}
 	if (!message.content.startsWith(global.PREFIX) || message.author.bot) return;
 
 	// //////////////////////// //

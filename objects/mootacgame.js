@@ -175,7 +175,7 @@ module.exports = class {
                 return this.board[getIndexWithinSupersection(s, current[0])];
             }
         }
-        for (var i = 0; i < 9; i++) {
+        for (let i = 0; i < 9; i++) {
             if (this.board[i] === 'U') {
                 return null;
             }
@@ -200,7 +200,7 @@ module.exports = class {
                 return this.superboard[current[0]];
             }
         }
-        for (var i = 0; i < 9; i++) {
+        for (let i = 0; i < 9; i++) {
             if (this.superboard[i] === 'U') {
                 return null;
             }
