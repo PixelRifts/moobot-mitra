@@ -39,26 +39,27 @@ Client.on('ready', () => {
 });
 
 Client.on('message', message => {
-	if (recentMessages[message.author.id] == null) {
-		recentMessages[message.author.id] = [];
-		recentMessages[message.author.id].push(message.content);
-	} else {
-		recentMessages[message.author.id].push(message.content);
-		if (recentMessages[message.author.id].length > global.SPAM_COUNT) {
-			recentMessages[message.author.id].splice(0, 1);
-		}
-		let c = 0;
-		for (let i = 0; i < recentMessages[message.author.id].length; i++) {
-			if (recentMessages[message.author.id][i] == recentMessages[message.author.id][0]) {
-				c++;
+	if (!message.author.bot)
+		if (recentMessages[message.author.id] == null) {
+			recentMessages[message.author.id] = [];
+			recentMessages[message.author.id].push(message.content);
+		} else {
+			recentMessages[message.author.id].push(message.content);
+			if (recentMessages[message.author.id].length > global.SPAM_COUNT) {
+				recentMessages[message.author.id].splice(0, 1);
+			}
+			let c = 0;
+			for (let i = 0; i < recentMessages[message.author.id].length; i++) {
+				if (recentMessages[message.author.id][i] == recentMessages[message.author.id][0]) {
+					c++;
+				}
+			}
+			if (c >= global.SPAM_COUNT) {
+				recentMessages[message.author.id].pop();
+				message.author.send("Stop spamming bitch. :eyes:");
+				message.delete();
 			}
 		}
-		if (c >= global.SPAM_COUNT) {
-			recentMessages[message.author.id].pop();
-			message.author.send("Stop spamming bitch. :eyes:");
-			message.delete();
-		}
-	}
 	if (!message.content.startsWith(global.PREFIX) || message.author.bot) return;
 
 	// //////////////////////// //
