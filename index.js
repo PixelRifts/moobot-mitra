@@ -39,8 +39,8 @@ Client.on('ready', () => {
 });
 
 Client.on('message', message => {
-	if (message.author == 743900942788722708)
-		message.delete();
+	// if (message.author == 743900942788722708)
+	// 	message.delete();
 	if (!message.author.bot)
 		if (recentMessages[message.author.id] == null) {
 			recentMessages[message.author.id] = [];
