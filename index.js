@@ -1,3 +1,4 @@
+require('dotenv').config()
 const FileSystem = require('fs');
 const Discord = require('discord.js');
 
@@ -7,7 +8,6 @@ Client.commands = new Discord.Collection();
 // //////////////// //
 // GLOBAL FUNCTIONS //
 // //////////////// //
-global.DEV = false;
 
 global.capitalize = function(string) {
 	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
@@ -39,29 +39,9 @@ Client.on('ready', () => {
 });
 
 Client.on('message', message => {
-	// if (message.author == 743900942788722708)
-	// 	message.delete();
-	if (!message.author.bot)
-		if (recentMessages[message.author.id] == null) {
-			recentMessages[message.author.id] = [];
-			recentMessages[message.author.id].push(message.content);
-		} else {
-			recentMessages[message.author.id].push(message.content);
-			if (recentMessages[message.author.id].length > global.SPAM_COUNT) {
-				recentMessages[message.author.id].splice(0, 1);
-			}
-			let c = 0;
-			for (let i = 0; i < recentMessages[message.author.id].length; i++) {
-				if (recentMessages[message.author.id][i] == recentMessages[message.author.id][0]) {
-					c++;
-				}
-			}
-			if (c >= global.SPAM_COUNT) {
-				recentMessages[message.author.id].pop();
-				message.author.send("Stop spamming bitch. :eyes:");
-				message.delete();
-			}
-		}
+	if (message.author == 743900942788722708)
+		message.delete();
+	spamProtect(message);
 	if (!message.content.startsWith(global.PREFIX) || message.author.bot) return;
 
 	// //////////////////////// //
@@ -125,10 +105,28 @@ module.exports.parseMention = function(mention) {
 	}
 }
 
-if (global.DEV) {
-    FileSystem.readFile("token.txt", "utf8", (err, data) => {
-        Client.login(data);
-    });
-} else {
-    Client.login(process.env.BOT_TOKEN);
+function spamProtect(message) {
+	if (!message.author.bot)
+		if (recentMessages[message.author.id] == null) {
+			recentMessages[message.author.id] = [];
+			recentMessages[message.author.id].push(message.content);
+		} else {
+			recentMessages[message.author.id].push(message.content);
+			if (recentMessages[message.author.id].length > global.SPAM_COUNT) {
+				recentMessages[message.author.id].splice(0, 1);
+			}
+			let c = 0;
+			for (let i = 0; i < recentMessages[message.author.id].length; i++) {
+				if (recentMessages[message.author.id][i] == recentMessages[message.author.id][0]) {
+					c++;
+				}
+			}
+			if (c >= global.SPAM_COUNT) {
+				recentMessages[message.author.id].pop();
+				message.author.send("Stop spamming bitch. :eyes:");
+				message.delete();
+			}
+		}
 }
+
+Client.login(process.env.BOT_TOKEN);
