@@ -9,6 +9,8 @@ Client.commands = new Discord.Collection();
 // GLOBAL FUNCTIONS //
 // //////////////// //
 
+global.vedBan = false;
+
 global.capitalize = function(string) {
 	return [].map.call(string, (char, i) => i ? char : char.toUpperCase()).join('');
 }
@@ -39,8 +41,9 @@ Client.on('ready', () => {
 });
 
 Client.on('message', message => {
-	// if (message.author == 743900942788722708)
-	// 	message.delete();
+	if (global.vedBan)
+		if (message.author == 743900942788722708)
+			message.delete();
 	spamProtect(message);
 	if (!message.content.startsWith(global.PREFIX) || message.author.bot) return;
 
